@@ -18,7 +18,6 @@ enum TokenType // basic setup for now to support this foo example
     StringLiteral,
     OpenBrace,
     CloseBrace,
-    Semicolon,
     Import,
     From,
     OpenParenthesis,

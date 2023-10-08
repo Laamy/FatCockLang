@@ -59,10 +59,6 @@ class Lexer
                 else if (word == "}")
                     token.Type = TokenType.CloseBrace;
 
-                // semicolon (end of line)
-                else if (word == ";")
-                    token.Type = TokenType.Semicolon;
-
                 // string
                 else if (Regex.IsMatch(word, "\".*\""))
                     token.Type = TokenType.StringLiteral;
