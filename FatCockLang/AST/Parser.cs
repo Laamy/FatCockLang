@@ -140,13 +140,27 @@ class Parser
             }
             else
             {
-                throw new Exception($"Unexpected token {nextToken.Type} in identifier statement at line {nextToken.Line}, (value: {tokens[current].Value}) (current: {current})");
+                if (nextToken == null)
+                {
+                    throw new Exception($"Unexpected end of file in identifier statement at line {tokens[current].Line}, (value: {tokens[current].Value}) (current: {current})");
+                }
+                else
+                {
+                    throw new Exception($"Unexpected token {nextToken.Type} in identifier statement at line {nextToken.Line}, (value: {tokens[current].Value}) (current: {current})");
+                }
             }
         }
         else
         {
             // no other possible case for now (stuff other then function calls like variable assignments)
-            throw new Exception($"Unexpected token {nextToken.Type} in identifier statement at line {nextToken.Line}, (value: {tokens[current].Value}) (current: {current})");
+            if (nextToken == null)
+            {
+                throw new Exception($"Unexpected end of file in identifier statement at line {tokens[current].Line}, (value: {tokens[current].Value}) (current: {current})");
+            }
+            else
+            {
+                throw new Exception($"Unexpected token {nextToken.Type} in identifier statement at line {nextToken.Line}, (value: {tokens[current].Value}) (current: {current})");
+            }
         }
     }
 
@@ -190,8 +204,6 @@ class Parser
 
         Expect(TokenType.From);
         importNode.Children.Add(ParseStringLiteral());
-
-        Expect(TokenType.Semicolon);
 
         return importNode;
     }

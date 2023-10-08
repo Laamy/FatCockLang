@@ -19,9 +19,11 @@ class Lexer
             // split on tokens in string
             string[] words = TokenizeString(line.Trim()).ToArray();
 
+            int curToken = 0;
             foreach (string word in words)
             {
-                Console.WriteLine(word);
+                Console.WriteLine($"{curLine} {curToken}: {word}");
+                curToken++;
 
                 Token token = new Token();
                 token.Line = curLine;
