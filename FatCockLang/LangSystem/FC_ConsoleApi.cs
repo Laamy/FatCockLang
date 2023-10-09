@@ -27,4 +27,10 @@ class FC_ConsoleApi
 
         return null;
     }
+
+    public object Clear(object[] args)
+    {
+        Console.Clear();
+        return null;
+    }
 }

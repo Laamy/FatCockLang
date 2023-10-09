@@ -2,6 +2,7 @@
 
 void test()
 {
+    Console.Clear()
     Console.WriteLine("Hello, world!")
     Console.WriteLine("Bye world..?")
 }
