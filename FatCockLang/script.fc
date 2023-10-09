@@ -1,0 +1,12 @@
+﻿import Console from "ConsoleApi"
+
+void test()
+{
+    Console.WriteLine("Hello, world!")
+    Console.WriteLine("Bye world..?")
+}
+
+void main()
+{
+    test()
+}

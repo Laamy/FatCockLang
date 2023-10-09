@@ -28,25 +28,23 @@ class Interpreter
 
     private Environment LoadModule(string name)
     {
-        // temp hardcoded for the concept
-        Environment module = new Environment();
+        //module.DeclareFunction("Write", args =>
+        //{
+        //    // temp function implementation
+        //    if (args.Length == 1)
+        //    {
+        //        Console.WriteLine(args[0]);
+        //    }
+        //    else
+        //    {
+        //        throw new Exception($"{name}.Write() requires at least one argument");
+        //    }
 
-        module.DeclareFunction("Write", args =>
-        {
-            // temp function implementation
-            if (args.Length == 1)
-            {
-                Console.WriteLine(args[0]);
-            }
-            else
-            {
-                throw new Exception($"{name}.Write() requires at least one argument");
-            }
+        //    return null;
+        //});
 
-            return null;
-        });
-
-        return module;
+        // first lets check system modules
+        return GlobalModules.GetModule(name);
     }
 
     private void CreateGlobal()
@@ -75,9 +73,13 @@ class Interpreter
 
             case "ImportStatement":
                 {
-                    string moduleName = node.Children[0].Value;
+                    var import = node.Children;
+
+                    string asModule = import[0].Value;
+                    string moduleName = import[1].Value;
+
                     Environment module = LoadModule(moduleName);
-                    environment.ImportModule(moduleName, module);
+                    environment.ImportModule(asModule, module);
                 }
                 break;
 
@@ -129,18 +131,37 @@ class Interpreter
                             // set callname to the next child
                             callName = node.Children[1].Value;
 
-                            call = module.Value.GetFunction(callName);
-                            if (call != null)
+                            //Console.WriteLine(module.Value);
+                            try
                             {
-                                // exists so lets call it
-                                List<object> args = new List<object>();
-                                foreach (ASTNode child in node.Children[2].Children)
-                                {
-                                    args.Add(Evaluate(child, environment));
-                                }
-                                call(args.ToArray());
-                                return;
+                                call = module.Value.GetFunction(callName);
                             }
+                            catch
+                            {
+                                throw new Exception($"Function {callName} does not exist");
+                            }
+
+                            // exists so lets call it
+                            List<object> args = new List<object>();
+                            foreach (ASTNode child in node.Children[2].Children)
+                            {
+                                args.Add(Evaluate(child, environment));
+                            }
+
+                            try
+                            {
+                                call(args.ToArray());
+                            }
+                            catch (Exception e)
+                            {
+                                if (e.Message.Contains("not set to an instance"))
+                                {
+                                    throw new Exception($"Function {callName} doesnt exist");
+                                }
+
+                                throw new Exception($"Function {callName} does not take such arguments");
+                            }
+                            return;
                         }
                     }
 

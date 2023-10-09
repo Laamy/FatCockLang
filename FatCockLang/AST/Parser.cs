@@ -115,7 +115,9 @@ class Parser
         var identifierNode = ParseIdentifier();
         var nextToken = PeekNextToken();
 
-        if (nextToken != null && nextToken.Type == TokenType.OpenParenthesis)
+        Console.WriteLine($"{identifierNode.Value} {nextToken.Value}");
+
+        if (tokens[current].Type == TokenType.OpenParenthesis)
         {
             var functionCallNode = new ASTNode { Type = "FunctionCall" };
             functionCallNode.Children.Add(identifierNode);
@@ -152,7 +154,7 @@ class Parser
         }
         else
         {
-            // no other possible case for now (stuff other then function calls like variable assignments)
+            // no other possible case for now (stuff like variable assignments)
             if (nextToken == null)
             {
                 throw new Exception($"Unexpected end of file in identifier statement at line {tokens[current].Line}, (value: {tokens[current].Value}) (current: {current})");

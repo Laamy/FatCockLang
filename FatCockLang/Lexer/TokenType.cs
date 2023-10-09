@@ -4,7 +4,7 @@
 
 import Console from "ConsoleApi"
 
-void foo() 
+void main() 
 {
     Console.Write("Hello!");
 }

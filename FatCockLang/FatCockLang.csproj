@@ -46,8 +46,10 @@
     <Compile Include="AST\ASTNode.cs" />
     <Compile Include="AST\ASTTraverser.cs" />
     <Compile Include="AST\Parser.cs" />
+    <Compile Include="GlobalModules.cs" />
     <Compile Include="Interpreter\Environment.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
+    <Compile Include="LangSystem\FC_ConsoleApi.cs" />
     <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="script.fc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

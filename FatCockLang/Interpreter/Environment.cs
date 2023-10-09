@@ -59,6 +59,9 @@ class Environment
 
     public Func<object[], object> GetFunction(string name)
     {
+        if (functions == null)
+            return null;
+
         if (functions.ContainsKey(name))
         {
             return functions[name];

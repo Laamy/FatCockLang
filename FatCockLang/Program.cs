@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 class Program
 {
     static void Main(string[] args)
     {
-        string code = @"import Console from ""ConsoleApi""
+        string code = File.ReadAllText("script.fc");
 
-void main()
-{
-    Console.Write(""Hello, world!"")
-    Console.Write(""Bye world..?"")
-}";
+        // setup system modules first
+        GlobalModules.Init();
 
         Lexer lexer = new Lexer();
         List<Token> tokens = lexer.Tokenize(code);
@@ -23,6 +21,8 @@ void main()
             ASTNode program = parser.Parse();
 
             ASTTraverser.Traverse(program);
+
+            Console.WriteLine("Executing program...\r\n");
 
             // last but not least lets test our ast tree before writing the rest of the compiler
             Interpreter interpreter = new Interpreter();

@@ -61,7 +61,12 @@ class Lexer
 
                 // string
                 else if (Regex.IsMatch(word, "\".*\""))
+                {
                     token.Type = TokenType.StringLiteral;
+
+                    // remove start and end characters (the quotes)
+                    token.Value = word.Substring(1, word.Length - 2);
+                }
 
                 else if (string.IsNullOrEmpty(word))
                     continue; // skip this step
